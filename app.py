@@ -1,4 +1,6 @@
 def normalize_input(text):
+    # converting input to lowercase and removing extra spaces
+    # helps in matching keywords properly
     return text.lower().strip()
 
 

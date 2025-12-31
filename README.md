@@ -8,6 +8,7 @@ I started with rule-based logic to understand how AI systems work internally bef
 Stages durning development:
 
 STAGE 1: Early stage , Rule (Logic) based AI
+
 STAGE 2: Machine Learning , DL,NLP
 Uses pre-trained deep learning language model based on transformer architecture
 The project uses a hybrid AI approach. Rule-based systems handle safety and intent abstraction, while a pre-trained deep learning language model generates philosophical responses. This separation ensures both explainability and flexibility.

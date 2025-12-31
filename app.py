@@ -1,4 +1,6 @@
-from philosopher import socratic_response, stoic_response, existential_response
+
+from intent import detect_intent
+from philosopher import socratic_response, stoic_response, existential_response,respond_by_intent
 from guardrails import is_sensitive_topic, safe_response
 
 def choose_style(question):
@@ -41,16 +43,24 @@ def main():
             print("Silence itself can be philosophical.")
             return
 
-        # Ethical guardrail check
         if is_sensitive_topic(question):
             print(safe_response())
             return
 
-        response_fn = choose_style(question)
-        print(response_fn(question))
+        intent = detect_intent(question)
+        response = respond_by_intent(intent)
+        print(response)
 
     except Exception:
         print("Even philosophers pause at uncertainty.")
 
 
 main()
+
+
+
+
+
+
+
+

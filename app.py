@@ -1,5 +1,5 @@
 from philosopher import socratic_response, stoic_response, existential_response
-
+from guardrails import is_sensitive_topic, safe_response
 
 def choose_style(question):
     if "meaning" in question or "purpose" in question:
@@ -41,12 +41,16 @@ def main():
             print("Silence itself can be philosophical.")
             return
 
-        response_function = choose_style(question)
-        print(response_function(question))
+        # Ethical guardrail check
+        if is_sensitive_topic(question):
+            print(safe_response())
+            return
+
+        response_fn = choose_style(question)
+        print(response_fn(question))
 
     except Exception:
         print("Even philosophers pause at uncertainty.")
-
 
 
 main()

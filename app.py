@@ -1,3 +1,4 @@
+#after lec 11
 from guardrails import is_sensitive_topic, safe_response
 from philosopher import respond_by_intent
 from intent import detect_intent
@@ -6,35 +7,78 @@ from ml_model.predict import predict_intent
 
 def main():
     print("Welcome to AI Philosopher")
+    print("Type 'exit' anytime to leave the conversation.\n")
 
-    # take input from user
-    question = input("Ask a philosophical question: ").lower().strip()
+    while True:
+        question = input("You: ").lower().strip()
 
-    # handle empty input
-    if question == "":
-        print("Silence itself can be philosophical.")
-        return
+        # exit condition
+        if question in ["exit", "quit", "bye"]:
+            print("AI Philosopher: Farewell. May your reflections continue.")
+            break
 
-    # ethical guardrails
-    if is_sensitive_topic(question):
-        print(safe_response())
-        return
+        # empty input handling
+        if question == "":
+            print("AI Philosopher: Silence itself can be philosophical.")
+            continue
 
-    # try ML-based intent detection first
-    intent = predict_intent(question)
+        # ethical guardrails
+        if is_sensitive_topic(question):
+            print("AI Philosopher:", safe_response())
+            continue
 
-    # fallback to rule-based intent detection if ML is unsure
-    if intent is None:
-        intent = detect_intent(question)
+        # ML-based intent detection
+        intent = predict_intent(question)
 
-    # generate final response based on intent
-    response = respond_by_intent(intent)
-    print(response)
+        # fallback to rule-based intent
+        if intent is None:
+            intent = detect_intent(question)
+
+        response = respond_by_intent(intent)
+        print("AI Philosopher:", response)
 
 
-# program entry point
 if __name__ == "__main__":
     main()
+
+#before lec 11
+# from guardrails import is_sensitive_topic, safe_response
+# from philosopher import respond_by_intent
+# from intent import detect_intent
+# from ml_model.predict import predict_intent
+
+
+# def main():
+#     print("Welcome to AI Philosopher")
+
+#     # take input from user
+#     question = input("Ask a philosophical question: ").lower().strip()
+
+#     # handle empty input
+#     if question == "":
+#         print("Silence itself can be philosophical.")
+#         return
+
+#     # ethical guardrails
+#     if is_sensitive_topic(question):
+#         print(safe_response())
+#         return
+
+#     # try ML-based intent detection first
+#     intent = predict_intent(question)
+
+#     # fallback to rule-based intent detection if ML is unsure
+#     if intent is None:
+#         intent = detect_intent(question)
+
+#     # generate final response based on intent
+#     response = respond_by_intent(intent)
+#     print(response)
+
+
+# # program entry point
+# if __name__ == "__main__":
+#     main()
 
 
 

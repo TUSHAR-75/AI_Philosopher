@@ -1,12 +1,27 @@
 # This module handles ML/DL-based response generation
 
-def generate_ai_response(question):
+from transformers import pipeline
+
+# load once (important for performance)
+_generator = pipeline(
+    "text-generation",
+    model="distilgpt2",
+    max_new_tokens=60
+)
+
+
+def generate_ai_response(prompt):
     """
-    Simulated AI response.
-    Later, this function will call a real language model API.
+    Generates a philosophical response using a pre-trained language model.
+    This function is only responsible for language generation.
     """
-    return (
-        "That is a profound question. "
-        "Perhaps its value lies not in the answer, "
-        "but in how it shapes your way of thinking."
-    )
+    try:
+        output = _generator(prompt)
+        text = output[0]["generated_text"]
+
+        # keep response short and clean
+        return text[len(prompt):].strip()
+
+    except Exception:
+        return "Let us pause and reflect quietly."
+
